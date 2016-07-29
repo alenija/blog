@@ -1,0 +1,24 @@
+# src/Blogger/BlogBundle/Resources/config/Doctrine/Image.orm.yml
+
+AppBundleBundle\Entity\Image:
+    type: entity
+    repositoryClass: Blogger\BlogBundle\Entity\Repositories\ImageRepository
+    table: images
+    id:
+    id:
+        type:         integer
+        generator:    { strategy: AUTO }
+    fields:
+    filename:
+        type:         string
+        length:       100
+
+    # changed when files are uploaded, to force preUpdate and postUpdate to fire
+    updated:
+        type:         datetime
+        nullable:     true
+
+    # ... other fields ...
+    lifecycleCallbacks:
+        prePersist:   [ lifecycleFileUpload ]
+        preUpdate:    [ lifecycleFileUpload ]

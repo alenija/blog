@@ -1,0 +1,10 @@
+# src/Blogger/BlogBundle/Resources/config/config.yml
+
+parameters:
+    # Blogger max latest comments
+    blogger_blog.comments.latest_comment_limit: 10
+
+    # Blogger contact email address
+    blogger_blog.emails.contact_email: alenija23@gmail.com
+
+    images_directory: '%kernel.root_dir%/../web/images'

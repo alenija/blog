@@ -1,0 +1,67 @@
+BloggerBlogBundle_homepage:
+    path:    /
+    defaults: { _controller: BlogBundle:Page:index }
+    requirements:
+         methods:  GET
+
+BloggerBlogBundle_about:
+    path:   /about
+    defaults: { _controller: BlogBundle:Page:about }
+    requirements:
+         methods:  GET
+
+BloggerBlogBundle_contact:
+    path:   /contact
+    defaults: { _controller: BlogBundle:Page:contact }
+    requirements:
+         methods:  GET|POST
+
+BloggerBlogBundle_blog_show:
+    path:  /{id}/{slug}
+    defaults: { _controller: BlogBundle:Blog:show }
+    requirements:
+        methods:  GET
+        id: \d+
+
+BloggerBlogBundle_comment_create:
+    path:  /comment/{blog_id}
+    defaults: { _controller: BlogBundle:Comment:create }
+    requirements:
+        methods:  POST
+        blog_id: \d+
+
+BloggerBlogBundle_blog_create:
+    path:  /blog
+    defaults: { _controller: BlogBundle:Blog:create }
+    requirements:
+        methods:  GET|POST
+
+BloggerBlogBundle_registration:
+    path:  /registration
+    defaults: { _controller: BlogBundle:Registration:registration }
+
+_security_login:
+    path:  /login
+    defaults: { _controller: BlogBundle:Security:login }
+
+_security_check:
+    path:  /login_check
+
+_security_logout:
+    path:  /logout
+
+admin_home:
+    path:  /admin/
+    defaults: { _controller: BlogBundle:Admin:index }
+
+BloggerBlogBundle_blog_delete:
+    path:  /admin/blog_delete/{id}
+    defaults: { _controller: BlogBundle:Blog:delete }
+    requirements:
+        id: \d+
+
+BloggerBlogBundle_blog_update:
+    path:  /admin/blog_update/{id}
+    defaults: { _controller: BlogBundle:Blog:update }
+    requirements:
+        id: \d+

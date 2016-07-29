@@ -1,0 +1,61 @@
+
+{% extends 'BlogBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    '@BlogBundle/Resources/public/css/*'
+    %}
+        <link href="{{ asset_url }}" rel="stylesheet" media="admin" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block title %}Admin{% endblock%}
+
+{% block body %}
+    <h2>
+        Welcome to the administrator's page, {{ app.user.username }}!
+    </h2>
+
+    <p>
+        {% for flash_message in app.session.flashBag.get('notice') %}
+                <div class="flash-notice">
+                    {{ flash_message }}
+                </div>
+        {% endfor %}
+    </p>
+
+    <h3>
+        The articles:
+    </h3>
+    <table class="articles">
+        <tr>
+            <th>id</th>
+            <th>image </th>
+            <th>title </th>
+            <th>author</th>
+            <th>comments</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for blog in blogs %}
+            <tr>
+                <td>{{ blog.id  }}</td>
+                <td><img src="{{ asset(['images/',blog.image]|join) }}" /></td>
+                <td>{{ blog.title  }}</td>
+                <td>{{ blog.author  }}</td>
+                <td>{{ blog.commentsCount }}</td>
+                <td><a href="{{ path('BloggerBlogBundle_blog_show', { 'id': blog.id, 'slug': blog.slug }) }}">View</a></td>
+                <td><a href="{{ path('BloggerBlogBundle_blog_update', { 'id': blog.id }) }}">Change</a></td>
+                <td><a href="{{ path('BloggerBlogBundle_blog_delete', { 'id': blog.id }) }}">Delete</a></td>
+            </tr>
+        {% else %}
+            <p>There are no blog entries for myblog</p>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}

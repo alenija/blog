@@ -1,0 +1,18 @@
+{% extends 'BlogBundle::layout.html.twig' %}
+
+{% block title %}Add Blog{% endblock%}
+
+{% block body %}
+    <h1>Edit article for blog {{ Title }}</h1>
+
+    {{ form_start(form, {
+        'method': 'POST',
+        'attr': {'class': 'blogger'}
+    }
+    ) }}
+
+    {{ form_widget(form) }}
+    <p>
+        <input type="submit" value="Submit">
+    </p>
+{% endblock %}

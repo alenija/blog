@@ -1,0 +1,22 @@
+.articles {
+    border-collapse: collapse;
+    border: 1px solid grey;
+    width: 600px;
+}
+
+.articles th, td {
+    padding: 10px 15px;
+    width: 30%;
+    text-align: center;
+    border: 1px solid lightgrey;
+}
+
+.articles th{
+    color: #c74912;
+}
+
+.flash-notice{
+    color: red;
+    font-family: 'Irish Grover', cursive;
+    font-size: 17px;
+}

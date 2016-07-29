@@ -1,0 +1,42 @@
+{# src/Blogger/BlogBundle/Resources/views/Page/index.html.twig #}
+{% extends 'BlogBundle::layout.html.twig' %}
+
+{% block body %}
+
+    {% for blog_template in pagination.items %}
+        <article class="blog">
+            <div class="date"><time datetime="{{ blog_template.created|date('c') }}">{{ blog_template.created|date('l, F j, Y') }}</time></div>
+            <header>
+                <h2><a href="{{ path('BloggerBlogBundle_blog_show', { 'id': blog_template.id, 'slug': blog_template.slug }) }}">{{ blog_template.title }}</a></h2>
+            </header>
+
+            <img src="{{ asset(['images/', blog_template.image]|join) }}" />
+            <div class="snippet">
+                <p>{{ blog_template.blog }}</p>
+                <p class="continue"><a href="{{ path('BloggerBlogBundle_blog_show', { 'id': blog_template.id, 'slug': blog_template.slug }) }}">Continue reading...</a></p>
+            </div>
+
+            <footer class="meta">
+                <p>Comments: <a href="{{ path('BloggerBlogBundle_blog_show', { 'id': blog_template.id, 'slug': blog_template.slug }) }}#comments">{{ blog_template.commentsCount }}</a></p>
+
+                {#example from the article on Habrahabr(it is working)#}
+                {#<p>Comments: {{ blog_template.comments|length }}</p>#}
+
+                <p>Posted by <span class="highlight">{{blog_template.author}}</span> at {{ blog_template.created|date('h:iA') }}</p>
+                <p>Tags: <span class="highlight">{{ blog_template.tags }}</span></p>
+            </footer>
+        </article>
+    {% else %}
+    {% endfor %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div>
+            <p>New article for blog: <a href="{{ path('BloggerBlogBundle_blog_create') }}"> MyBlog </a></p>
+        </div>
+    {% endif %}
+
+{% endblock %}
