@@ -15,35 +15,19 @@ class CommentController extends Controller
 {
     public function newAction($blog_id) //show comment form
     {
-        $blog = $this->getBlog($blog_id);
-
-        $comment = new Comment();
-        $comment->setBlog($blog);
-
-        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $user = $this->getUser()->getUsername();
-            $comment->setUser($user);
-        }
+        $comment = $this->processInitializationComment($blog_id);
 
         $form = $this->createForm(CommentType::class, $comment);
 
         return $this->render('BlogBundle:Comment:form.html.twig', array(
             'comment' => $comment,
-            'form'   => $form->createView()
+            'form' => $form->createView()
         ));
     }
 
     public function createAction(Request $request, $blog_id) //data processing in the form of a comment
     {
-        $blog = $this->getBlog($blog_id);
-
-        $comment  = new Comment();
-        $comment->setBlog($blog);
-
-        if($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $user = $this->getUser()->getUsername();
-            $comment->setUser($user);
-        }
+        $comment = $this->processInitializationComment($blog_id);
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -55,16 +39,31 @@ class CommentController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
-                        'id' => $comment->getBlog()->getId(),
-                        'slug'  => $comment->getBlog()->getSlug())) .
-                    '#comment-' . $comment->getId()
+                    'id' => $comment->getBlog()->getId(),
+                    'slug' => $comment->getBlog()->getSlug())) .
+                '#comment-' . $comment->getId()
             );
         }
 
         return $this->render('BlogBundle:Comment:create.html.twig', array(
             'comment' => $comment,
-            'form'    => $form->createView()
+            'form' => $form->createView()
         ));
+    }
+
+    protected function processInitializationComment($blog_id)
+    {
+        $blog = $this->getBlog($blog_id);
+
+        $comment = new Comment();
+        $comment->setBlog($blog);
+
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $user = $this->getUser()->getUsername();
+            $comment->setUser($user);
+        }
+
+        return $comment;
     }
 
     protected function getBlog($blog_id)
