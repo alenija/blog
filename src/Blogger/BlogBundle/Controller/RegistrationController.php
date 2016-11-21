@@ -11,12 +11,10 @@ use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
+use FOS\UserBundle\Model\UserManagerInterface;
 
 class RegistrationController extends BaseController
 {
-
- // Нужно переделать сущность User, унаследовать от FOS
-
     public function getParent()
     {
         return 'fos_user_registration';
@@ -62,7 +60,8 @@ class RegistrationController extends BaseController
             return $response;
         }
 
-        return $this->render('FOSUserBundle:Registration:register.html.twig', array(
+//        return $this->render('FOSUserBundle:Registration:register.html.twig', array(
+        return $this->render('BlogBundle:Security:register.html.twig', array(
             'form' => $form->createView(),
         ));
     }

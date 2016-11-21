@@ -23,6 +23,12 @@ BloggerBlogBundle_blog_show:
         methods:  GET
         id: \d+
 
+BloggerBlogBundle_blog_create:
+    path:  /blog
+    defaults: { _controller: BlogBundle:Blog:create }
+    requirements:
+        methods:  GET|POST
+
 BloggerBlogBundle_comment_create:
     path:  /comment/{blog_id}
     defaults: { _controller: BlogBundle:Comment:create }
@@ -30,25 +36,25 @@ BloggerBlogBundle_comment_create:
         methods:  POST
         blog_id: \d+
 
-BloggerBlogBundle_blog_create:
-    path:  /blog
-    defaults: { _controller: BlogBundle:Blog:create }
-    requirements:
-        methods:  GET|POST
-
 BloggerBlogBundle_registration:
     path:  /registration
     defaults: { _controller: BlogBundle:Registration:registration }
 
 _security_login:
-    path:  /login
-    defaults: { _controller: BlogBundle:Security:login }
+#    path:  /login
+    path:  /fos_user_security_login
+#    defaults: { _controller: BlogBundle:Security:login }
+    defaults: { _controller: FOSUserBundle:Security:login }
 
 _security_check:
-    path:  /login_check
+#    path:  /login_check
+    path:  /fos_user_security_check
+    defaults: { _controller: FOSUserBundle:Security:check }
 
 _security_logout:
-    path:  /logout
+#    path:  /logout
+    path:  /fos_user_security_logout
+    defaults: { _controller: FOSUserBundle:Security:logout }
 
 admin_home:
     path:  /admin/

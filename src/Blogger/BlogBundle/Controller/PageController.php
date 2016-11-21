@@ -20,8 +20,8 @@ class PageController extends Controller
         $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate($blogs,
-                                            $request->query->getInt('page', 1),
-                                            3);
+            $request->query->getInt('page', 1),
+            3);
 
         // parameters to template
         return $this->render('BlogBundle:Page:index.html.twig', array(

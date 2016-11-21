@@ -26,13 +26,24 @@ security:
         main:
             pattern: /.*
             form_login:
-                check_path: /login_check
-                login_path: /login
+#                check_path: /login_check
+#                login_path: /login
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
 
-#                provider: fos_userbundle
-#                csrf_token_generator: security.csrf.token_manager
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
 
-            logout: true
+#            logout: true
+            logout:
+                invalidate_session : false
+                path: /fos_user_security_logout
+                target: /
+
             security: true
             anonymous: true
 
@@ -41,5 +52,9 @@ security:
             security: false
 
     access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /admin/.*, role: ROLE_ADMIN }
         - { path: /.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }

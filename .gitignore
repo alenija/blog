@@ -1,0 +1,6 @@
+var/cache
+access.log
+error.log
+web/images/
+.idea/
+var/sessions/

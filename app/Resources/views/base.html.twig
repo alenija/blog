@@ -17,8 +17,8 @@
 
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 </head>
-<body>
 
+<body>
 <section id="wrapper">
     <header id="header">
         <div class="top">
@@ -29,9 +29,13 @@
                         <li><a href="{{ path('BloggerBlogBundle_about') }}">About</a></li>
                         <li><a href="{{ path('BloggerBlogBundle_contact') }}">Contact</a></li>
                         <li><a href="{{ path('BloggerBlogBundle_registration') }}">Registration</a></li>
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                             <li>
-                                <a href="{{ path('_security_logout') }}">Exit</a>
+                            <a href="{{ path('_security_logout') }}"> {{ app.user.username }} {{ 'layout.logout'|trans({}, 'FOSUserBundle') }} </a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="{{ path('_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
                             </li>
                         {% endif %}
                     </ul>

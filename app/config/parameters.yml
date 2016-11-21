@@ -5,10 +5,12 @@ parameters:
     database_name: blog
     database_user: root
     database_password: user
+
     mailer_transport: gmail
     mailer_encryption: ssl
     mailer_auth_mode: login
     mailer_host: smtp.gmail.com
     mailer_user: alena.test.post
     mailer_password: userss123
+
     secret: blog_test
