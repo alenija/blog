@@ -4,7 +4,6 @@ namespace Blogger\BlogBundle\Controller;
 
 use Knp\Component\Pager\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use Blogger\BlogBundle\Entity\Enquiry;

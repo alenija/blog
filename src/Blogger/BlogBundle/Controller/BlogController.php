@@ -35,15 +35,16 @@ class BlogController extends Controller
         $comments = $em->getRepository('BlogBundle:Comment')
             ->getCommentsForBlog($blog->getId());
         
-        $b = count($em->getRepository('BlogBundle:Comment')
+        $countComment = count($em->getRepository('BlogBundle:Comment')
             ->getCommentsForBlog($blog->getId()));
 
-        
+        $user = $this->getUser();
 
         return $this->render('BlogBundle:Blog:show.html.twig', array( //если сущность найдена - передаем ее во вьюшку
+            'user'=>$user,
             'blog' => $blog, //во вьюшке twig-а будет массив blog с данными из $blog
             'comments' => $comments,
-            'b' =>$b,
+//            'b' =>$countComment,
         ));
     }
 

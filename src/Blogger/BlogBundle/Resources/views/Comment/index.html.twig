@@ -3,8 +3,12 @@
 {% for comment in comments %}
     <article class="comment {{ cycle(['odd', 'even'], loop.index0) }}" id="comment-{{ comment.id }}">
         <header>
-            <p><span class="highlight">{{ comment.user }}</span> commented <time datetime="{{ comment.created|date('c') }}">{{ comment.created|created_ago }}</time>
-                [<time datetime="{{ comment.created|date('c') }}">{{ comment.created|date('l, F j, Y') }}</time>]</p>
+            <div><span class="highlight">{{ comment.user }}</span> commented <time datetime="{{ comment.created|date('c') }}">{{ comment.created|created_ago }}</time>
+                [<time datetime="{{ comment.created|date('c') }}">{{ comment.created|date('l, F j, Y') }}</time>]
+                {% if comment.user == user.username%}
+                    <a href="{{ path('BloggerBlogBundle_comment_change', { 'comment_id': comment.id }) }}" style="float: right">Change...</a>
+                {% endif %}
+            </div>
         </header>
         <p>{{ comment.comment }}</p>
     </article>

@@ -3,15 +3,6 @@
 
     {{ form_widget(form) }}
 
-    {#{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
-        {#<div style="text-align: center; color: #F48A00">{{ app.user.username }}</div>#}
-        {#{{ form_row(form.comment) }}#}
-    {#{% else %}#}
-        {#{{ form_row(form.user) }}#}
-        {#{{ form_row(form.comment) }}#}
-        {#{{ form_widget(form) }}#}
-    {#{% endif %}#}
-
 <p>
     <input type="submit" value="Submit">
 </p>

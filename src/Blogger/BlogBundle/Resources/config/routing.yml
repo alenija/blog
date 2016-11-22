@@ -36,6 +36,13 @@ BloggerBlogBundle_comment_create:
         methods:  POST
         blog_id: \d+
 
+BloggerBlogBundle_comment_change:
+    path:  /comment/change/{comment_id}
+    defaults: { _controller: BlogBundle:Comment:change }
+    requirements:
+        methods:  POST
+        blog_id: \d+
+
 BloggerBlogBundle_registration:
     path:  /registration
     defaults: { _controller: BlogBundle:Registration:registration }
@@ -71,3 +78,4 @@ BloggerBlogBundle_blog_update:
     defaults: { _controller: BlogBundle:Blog:update }
     requirements:
         id: \d+
+
