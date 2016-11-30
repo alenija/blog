@@ -1,6 +1,6 @@
 {% extends 'BlogBundle::layout.html.twig' %}
 
-{% block title %}Add Comment{% endblock%}
+{% block title %}Edit Comment{% endblock%}
 
 {% block body %}
     <h1>Edit comment for blog {{ Title }}</h1>
@@ -15,4 +15,6 @@
     <p>
         <input type="submit" value="Submit">
     </p>
+
+    {{ form_end(form) }}
 {% endblock %}

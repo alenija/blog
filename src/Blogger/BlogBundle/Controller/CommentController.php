@@ -72,13 +72,13 @@ class CommentController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $now = new\DateTime('now');
+            $time = new\DateTime('now');
             $getComment = $comment->getComment();
 
             $em = $this->getDoctrine()->getManager();
             $comment = $em->getRepository('BlogBundle:Comment')->find($comment_id);
 
-            $comment->setUpdated($now);
+            $comment->setUpdated($time);
             $comment->setComment($getComment);
 
             $em->flush();

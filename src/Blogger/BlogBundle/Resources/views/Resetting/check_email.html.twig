@@ -1,0 +1,10 @@
+{% extends 'BlogBundle::layout.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}{{ "Check email" }}{% endblock %}
+
+{% block body %}
+<p class="success-message">
+{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime}) }}
+</p>
+{% endblock %}

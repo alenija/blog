@@ -1,31 +1,40 @@
 {% extends 'BlogBundle::layout.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
 
-{% block title %}Login{% endblock%}
+{% block title %}{{ 'security.login.submit'|trans }}{% endblock %}
 
 {% block body %}
-    {% if error %}
-        <div class="error">{{ error.message }}</div>
-    {% endif %}
+    <form action="{{ path("fos_user_security_check") }}" method="post">
+        {% if error %}
+            <div class="error-logo"><p>{{ error.messageKey|trans(error.messageData, 'security') }}</p></div>
+        {% endif %}
 
-    <form action="{{ path('_security_check') }}" method="POST">
-        <table>
-            <tr>
-                <td>
-                    <label for="username">Username:</label>
-                </td>
-                <td>
-                    <input type="text" id="username" name="_username" value="{{ last_username }}" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="password">Password:</label>
-                </td>
-                <td>
-                    <input type="password" id="password" name="_password" />
-                </td>
-            </tr>
-        </table>
-        <input type="submit" name="login" value="Отправить" />
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        <div>
+            <label for="username">{{ 'security.login.username'|trans }}</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+        </div>
+        <div>
+            <label for="password">{{ 'security.login.password'|trans }}</label>
+            <input type="password" id="password" name="_password" required="required" />
+        </div>
+        <div>
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+        </div>
+        <div class="form-actions">
+            <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+        </div>
     </form>
-{% endblock %}
+
+
+    <ul>
+        <li><a href="{{ hwi_oauth_login_url('google') }}">Google+</a></li>
+        <li><a href="{{ hwi_oauth_login_url('facebook') }}">Facebook</a></li>
+        <li><a href="{{ hwi_oauth_login_url('github') }}">Github</a></li>
+        <li><a href="{{ path('fos_user_resetting_request') }}">Forgot password</a></li>
+    </ul>
+
+    {#{{ dump() }}#}
+    {#{{ dump(hwi_oauth_resource_owners()) }}#}
+{% endblock body %}

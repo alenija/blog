@@ -1,0 +1,11 @@
+{% extends 'BlogBundle::layout.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}{{ 'registration.confirmed'|trans }}{% endblock %}
+
+{% block body %}
+    <p class="success-message">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+    {% if targetUrl %}
+    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+    {% endif %}
+{% endblock body %}

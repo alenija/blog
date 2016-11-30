@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             //дает полный набор функционала для работы с пользователями:
             // регистрация, авторизация и прочее в том же духе.
             new FOS\UserBundle\FOSUserBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
 
             // The SonataAdminBundle

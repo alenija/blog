@@ -5,8 +5,10 @@
         <header>
             <div><span class="highlight">{{ comment.user }}</span> commented <time datetime="{{ comment.created|date('c') }}">{{ comment.created|created_ago }}</time>
                 [<time datetime="{{ comment.created|date('c') }}">{{ comment.created|date('l, F j, Y') }}</time>]
-                {% if comment.user == user.username%}
-                    <a href="{{ path('BloggerBlogBundle_comment_change', { 'comment_id': comment.id }) }}" style="float: right">Change...</a>
+                {% if user is not null %}
+                    {% if comment.user == user.username %}
+                        <a href="{{ path('BloggerBlogBundle_comment_change', { 'comment_id': comment.id }) }}" style="float: right">Change...</a>
+                    {% endif %}
                 {% endif %}
             </div>
         </header>

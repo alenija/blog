@@ -22,14 +22,24 @@ security:
         fos_userbundle:
             id: fos_user.user_provider.username
 
+        oauth.user_provider:
+            id: hwi_auth.oauth_user_provider
+
     firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
         main:
-            pattern: /.*
+#            pattern: /.*
+            pattern: ^/
+            anonymous: ~
+            security: true
             form_login:
-#                check_path: /login_check
-#                login_path: /login
-                login_path: fos_user_security_login
-                check_path: fos_user_security_check
+                check_path: /login_check
+                login_path: /login
+#                login_path: fos_user_security_login
+#                check_path: fos_user_security_check
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
 
@@ -38,21 +48,27 @@ security:
                 lifetime: 604800 # 1 week in seconds
                 path:     /
 
-#            logout: true
-            logout:
-                invalidate_session : false
-                path: /fos_user_security_logout
-                target: /
+            logout: true
 
-            security: true
-            anonymous: true
+# This is the HWIOAuthBundle part
+            oauth:
+                resource_owners:
+                    google:   "/connect/check-google"
+                    facebook: "/connect/check-facebook"
+                    github:   "/connect/check-github"
+                login_path:     /connect
+                failure_path:   /connect
 
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+                oauth_user_provider:
+                    service: my_user_provider
+#                    service: hwi_oauth.user.provider.fosub_bridge
+#                    service: hwi_auth.oauth_user_provider
+
 
     access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connect$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /admin/.*, role: ROLE_ADMIN }

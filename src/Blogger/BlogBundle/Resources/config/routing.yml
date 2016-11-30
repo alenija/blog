@@ -43,26 +43,6 @@ BloggerBlogBundle_comment_change:
         methods:  POST
         blog_id: \d+
 
-BloggerBlogBundle_registration:
-    path:  /registration
-    defaults: { _controller: BlogBundle:Registration:registration }
-
-_security_login:
-#    path:  /login
-    path:  /fos_user_security_login
-#    defaults: { _controller: BlogBundle:Security:login }
-    defaults: { _controller: FOSUserBundle:Security:login }
-
-_security_check:
-#    path:  /login_check
-    path:  /fos_user_security_check
-    defaults: { _controller: FOSUserBundle:Security:check }
-
-_security_logout:
-#    path:  /logout
-    path:  /fos_user_security_logout
-    defaults: { _controller: FOSUserBundle:Security:logout }
-
 admin_home:
     path:  /admin/
     defaults: { _controller: BlogBundle:Admin:index }

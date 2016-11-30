@@ -91,3 +91,35 @@ fos_user:
     firewall_name: main
     user_class: Blogger\BlogBundle\Entity\User
 
+hwi_oauth:
+    connect:
+        confirmation: true
+        registration_form: fos_user.registration.form.factory
+        account_connector: my_user_provider
+    firewall_names: [main]
+    fosub:
+        username_iterations: 30
+        properties:
+            google: google_id
+            facebook: facebook_id
+            github: github_id
+    resource_owners:
+        google:
+            type:                google
+            client_id:           "%google_client_id%"
+            client_secret:       "%google_client_secret%"
+            scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+        facebook:
+            type:                facebook
+            client_id:           "%facebook_client_id%"
+            client_secret:       "%facebook_client_secret%"
+            scope:               "email, public_profile"
+            infos_url:           "https://graph.facebook.com/me?fields=id,name,email,picture.type(large)"
+            options:
+                display: popup #dialog is optimized for popup window
+                auth_type: rerequest # Re-asking for Declined Permissions
+        github:
+            type:                github
+            client_id:           "%github_client_id%"
+            client_secret:       "%github_client_secret%"
+            scopes:              "user, repo"

@@ -83,6 +83,10 @@ class ComposerStaticInit3ddab56075ed03096c206d2a47c570f8
         array (
             'Incenteev\\ParameterHandler\\' => 27,
         ),
+        'H' => 
+        array (
+            'HWI\\Bundle\\OAuthBundle\\' => 23,
+        ),
         'F' => 
         array (
             'FOS\\UserBundle\\' => 15,
@@ -256,6 +260,10 @@ class ComposerStaticInit3ddab56075ed03096c206d2a47c570f8
         array (
             0 => __DIR__ . '/..' . '/incenteev/composer-parameter-handler',
         ),
+        'HWI\\Bundle\\OAuthBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hwi/oauth-bundle',
+        ),
         'FOS\\UserBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/friendsofsymfony/user-bundle',
@@ -384,6 +392,13 @@ class ComposerStaticInit3ddab56075ed03096c206d2a47c570f8
             'Doctrine\\Common\\Annotations\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/annotations/lib',
+            ),
+        ),
+        'B' => 
+        array (
+            'Buzz' => 
+            array (
+                0 => __DIR__ . '/..' . '/kriswallsmith/buzz/lib',
             ),
         ),
         'A' => 
