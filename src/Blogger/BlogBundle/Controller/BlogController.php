@@ -52,6 +52,9 @@ class BlogController extends Controller
     {
         $blog  = new Blog();
 
+        $user = $this->getUser()->getUsername();
+        $blog->setAuthor($user);
+
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
 
