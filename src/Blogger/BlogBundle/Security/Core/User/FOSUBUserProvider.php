@@ -68,6 +68,7 @@ class FOSUBUserProvider  extends BaseClass
             $user->$setter_token($response->getAccessToken());
             //I have set all requested data with the user's username
             //modify here with relevant data
+            
 //            $user->setUsername($username);
             $user->setUsername($response->getNickname());
             $user->setEmail($response->getEmail());
@@ -79,7 +80,7 @@ class FOSUBUserProvider  extends BaseClass
             }
 //            $user->setPassword($username);
             $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
-            $password = $encoder->encodePassword($response->getFirstName(), $user->getSalt());
+            $password = $encoder->encodePassword($response->getEmail(), $user->getSalt());
             $user->setPassword($password);
 //            $user->setRoles(['ROLE_USER']);
 //            $user->addRole('ROLE_USER');

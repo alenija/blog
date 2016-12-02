@@ -123,3 +123,22 @@ hwi_oauth:
             client_id:           "%github_client_id%"
             client_secret:       "%github_client_secret%"
             scopes:              "user, repo"
+
+ivory_ck_editor:
+    default_config: my_config
+    configs:
+        my_config:
+            toolbar: "my_toolbar"
+            forcePasteAsPlainText: true
+    toolbars:
+        configs:
+            my_toolbar: [ "@clipboard", "@editing" , "/", "@basicstyles" , "@paragraph" , "@links" , "@insert" , "/" , "@styles" , "@colors" ]
+        items:
+            clipboard: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ]
+            editing:   [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ]
+            basicstyles: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ]
+            paragraph: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl' ]
+            links: [ 'Link', 'Unlink', 'Anchor' ]
+            insert: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak', 'Youtube', 'Image Upload', 'Video Upload' ]
+            styles: [ 'Styles', 'Format', 'Font', 'FontSize' ]
+            colors: [ 'TextColor', 'BGColor' ]

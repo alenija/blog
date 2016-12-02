@@ -33,7 +33,7 @@
         {{ knp_pagination_render(pagination) }}
     </div>
 
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    {% if is_granted('ROLE_ADMIN') %}
         <div>
             <p>New article for blog: <a href="{{ path('BloggerBlogBundle_blog_create') }}"> MyBlog </a></p>
         </div>

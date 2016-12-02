@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 class BlogType extends AbstractType
 {
@@ -15,7 +16,17 @@ class BlogType extends AbstractType
         $builder
             ->add('title')
             ->add('author')
-            ->add('blog')
+            ->add('blog', CKEditorType::class, [
+                'config' => [
+                    'extraPlugins' => 'youtube',
+                ],
+                'plugins' => [
+                    'youtube' => [
+                        'path'     => '/ckeditor/plugins/youtube/',
+                        'filename' => 'plugin.js',
+                    ],
+                ],
+            ])
             ->add('image', FileType::class)
             ->add('tags')
         ;
