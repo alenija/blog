@@ -1,4 +1,5 @@
 var/cache
+var/logs
 access.log
 error.log
 web/images/
