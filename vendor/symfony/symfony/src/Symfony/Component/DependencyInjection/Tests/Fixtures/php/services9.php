@@ -221,11 +221,11 @@ class ProjectServiceContainer extends Container
 
         $this->services['foo'] = $instance = \Bar\FooClass::getInstance('foo', $a, array($this->getParameter('foo') => 'foo is '.$this->getParameter('foo').'', 'foobar' => $this->getParameter('foo')), true, $this);
 
-        $instance->setBar($this->get('bar'));
-        $instance->initialize();
         $instance->foo = 'bar';
         $instance->moo = $a;
         $instance->qux = array($this->getParameter('foo') => 'foo is '.$this->getParameter('foo').'', 'foobar' => $this->getParameter('foo'));
+        $instance->setBar($this->get('bar'));
+        $instance->initialize();
         sc_configure($instance);
 
         return $instance;
@@ -299,7 +299,7 @@ class ProjectServiceContainer extends Container
         if ($this->has('foobaz')) {
             $instance->setBar($this->get('foobaz', ContainerInterface::NULL_ON_INVALID_REFERENCE));
         }
-        $instance->setBar(($this->get("foo")->foo() . (($this->hasparameter("foo")) ? ($this->getParameter("foo")) : ("default"))));
+        $instance->setBar(($this->get("foo")->foo() . (($this->hasParameter("foo")) ? ($this->getParameter("foo")) : ("default"))));
 
         return $instance;
     }
@@ -418,8 +418,8 @@ class ProjectServiceContainer extends Container
     {
         $this->services['inlined'] = $instance = new \Bar();
 
-        $instance->setBaz($this->get('baz'));
         $instance->pub = 'pub';
+        $instance->setBaz($this->get('baz'));
 
         return $instance;
     }

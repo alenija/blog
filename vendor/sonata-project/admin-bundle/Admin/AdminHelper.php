@@ -79,6 +79,8 @@ class AdminHelper
     }
 
     /**
+     * NEXT_MAJOR: remove this method.
+     *
      * @deprecated
      *
      * @param string $code
@@ -219,13 +221,15 @@ class AdminHelper
     /**
      * Camelize a string.
      *
+     * NEXT_MAJOR: remove this method.
+     *
      * @static
      *
      * @param string $property
      *
      * @return string
      *
-     * @deprecated Deprecated since version 3.1. Use \Doctrine\Common\Inflector\Inflector::classify() instead.
+     * @deprecated Deprecated since version 3.1. Use \Doctrine\Common\Inflector\Inflector::classify() instead
      */
     public function camelize($property)
     {

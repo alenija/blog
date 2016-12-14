@@ -5,7 +5,6 @@ parameters:
     database_name: blog
     database_user: root
     database_password: user
-
     mailer_transport: gmail
     mailer_encryption: ssl
     mailer_auth_mode: login
@@ -13,7 +12,6 @@ parameters:
     mailer_user: alena.test.post
     mailer_password: userss123
     secret: blog_test
-
     google_client_id: 108168137646-ss8n8h2dhtl9mjas7hv2f5030al0cm62.apps.googleusercontent.com
     google_client_secret: MUk3kGktGbzSysWJOMjwCL2Q
     facebook_client_id: 298602563867262

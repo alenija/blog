@@ -10,7 +10,6 @@ return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Stfalcon\\Bundle\\TinymceBundle' => array($vendorDir . '/stfalcon/tinymce-bundle'),
     'SensioLabs\\Security' => array($vendorDir . '/sensiolabs/security-checker'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'ProxyManager\\' => array($vendorDir . '/ocramius/proxy-manager/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'Knp\\Component' => array($vendorDir . '/knplabs/knp-components/src'),
@@ -20,7 +19,6 @@ return array(
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
     'Doctrine\\Common\\DataFixtures' => array($vendorDir . '/doctrine/data-fixtures/lib'),
     'Doctrine\\Common\\Collections\\' => array($vendorDir . '/doctrine/collections/lib'),
-    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
     'Buzz' => array($vendorDir . '/kriswallsmith/buzz/lib'),
     'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
 );

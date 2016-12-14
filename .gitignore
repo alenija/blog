@@ -8,3 +8,6 @@ web/images/
 var/sessions/
 vendor
 .htaccess
+app/phpunit.xml
+phpunit-report
+app/config/parameters.yml

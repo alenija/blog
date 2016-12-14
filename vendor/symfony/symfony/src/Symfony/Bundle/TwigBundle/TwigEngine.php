@@ -51,8 +51,14 @@ class TwigEngine extends BaseEngine implements EngineInterface
         } catch (\Twig_Error $e) {
             if ($name instanceof TemplateReference) {
                 try {
-                    // try to get the real file name of the template where the error occurred
-                    $e->setTemplateFile(sprintf('%s', $this->locator->locate($this->parser->parse($e->getTemplateFile()))));
+                    // try to get the real name of the template where the error occurred
+                    $name = $e->getTemplateName();
+                    $path = (string) $this->locator->locate($this->parser->parse($name));
+                    if (method_exists($e, 'setSourceContext')) {
+                        $e->setSourceContext(new \Twig_Source('', $name, $path));
+                    } else {
+                        $e->setTemplateName($path);
+                    }
                 } catch (\Exception $e2) {
                 }
             }

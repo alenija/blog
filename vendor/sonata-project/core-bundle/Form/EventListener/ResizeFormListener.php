@@ -109,6 +109,8 @@ class ResizeFormListener implements EventSubscriberInterface
     }
 
     /**
+     * NEXT_MAJOR: remove this method.
+     *
      * @param FormEvent $event
      *
      * @deprecated Since version 2.3, to be renamed in 4.0.
@@ -118,7 +120,7 @@ class ResizeFormListener implements EventSubscriberInterface
     {
         // BC prevention for class extending this one.
         if (get_called_class() !== 'Sonata\CoreBundle\Form\EventListener\ResizeFormListener') {
-            trigger_error('The '.__METHOD__.' method is deprecated since 2.3 and will be renamed in 4.0. Use '.__CLASS__.'::preSubmit instead.', E_USER_DEPRECATED);
+            @trigger_error('The '.__METHOD__.' method is deprecated since 2.3 and will be renamed in 4.0. Use '.__CLASS__.'::preSubmit instead.', E_USER_DEPRECATED);
         }
 
         $this->preSubmit($event);
@@ -174,6 +176,8 @@ class ResizeFormListener implements EventSubscriberInterface
     }
 
     /**
+     * NEXT_MAJOR: remove this method.
+     *
      * @param FormEvent $event
      *
      * @deprecated Since version 2.3, to be removed in 4.0.
@@ -183,7 +187,7 @@ class ResizeFormListener implements EventSubscriberInterface
     {
         // BC prevention for class extending this one.
         if (get_called_class() !== 'Sonata\CoreBundle\Form\EventListener\ResizeFormListener') {
-            trigger_error(__CLASS__.'::'.__METHOD__.' is deprecated since 2.3 and will be renamed in 4.0. Use '.__CLASS__.'::onSubmit instead.', E_USER_DEPRECATED);
+            @trigger_error(__CLASS__.'::'.__METHOD__.' is deprecated since 2.3 and will be renamed in 4.0. Use '.__CLASS__.'::onSubmit instead.', E_USER_DEPRECATED);
         }
 
         $this->onSubmit($event);

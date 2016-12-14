@@ -23,6 +23,7 @@ use Sonata\AdminBundle\Util\AdminObjectAclManipulator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -105,7 +106,7 @@ class CRUDController extends Controller
         $formView = $datagrid->getForm()->createView();
 
         // set the theme for the current Admin Form
-        $this->get('twig')->getExtension('form')->renderer->setTheme($formView, $this->admin->getFilterTheme());
+        $this->setFormTheme($formView);
 
         return $this->render($this->admin->getTemplate('list'), array(
             'action' => 'list',
@@ -185,7 +186,7 @@ class CRUDController extends Controller
 
                 $this->addFlash(
                     'sonata_flash_success',
-                    $this->admin->trans(
+                    $this->trans(
                         'flash_delete_success',
                         array('%name%' => $this->escapeHtml($objectName)),
                         'SonataAdminBundle'
@@ -200,7 +201,7 @@ class CRUDController extends Controller
 
                 $this->addFlash(
                     'sonata_flash_error',
-                    $this->admin->trans(
+                    $this->trans(
                         'flash_delete_error',
                         array('%name%' => $this->escapeHtml($objectName)),
                         'SonataAdminBundle'
@@ -277,7 +278,7 @@ class CRUDController extends Controller
 
                     $this->addFlash(
                         'sonata_flash_success',
-                        $this->admin->trans(
+                        $this->trans(
                             'flash_edit_success',
                             array('%name%' => $this->escapeHtml($this->admin->toString($object))),
                             'SonataAdminBundle'
@@ -291,7 +292,7 @@ class CRUDController extends Controller
 
                     $isFormValid = false;
                 } catch (LockException $e) {
-                    $this->addFlash('sonata_flash_error', $this->admin->trans('flash_lock_error', array(
+                    $this->addFlash('sonata_flash_error', $this->trans('flash_lock_error', array(
                         '%name%' => $this->escapeHtml($this->admin->toString($object)),
                         '%link_start%' => '<a href="'.$this->admin->generateObjectUrl('edit', $object).'">',
                         '%link_end%' => '</a>',
@@ -304,7 +305,7 @@ class CRUDController extends Controller
                 if (!$this->isXmlHttpRequest()) {
                     $this->addFlash(
                         'sonata_flash_error',
-                        $this->admin->trans(
+                        $this->trans(
                             'flash_edit_error',
                             array('%name%' => $this->escapeHtml($this->admin->toString($object))),
                             'SonataAdminBundle'
@@ -318,22 +319,19 @@ class CRUDController extends Controller
             }
         }
 
-        $view = $form->createView();
-
+        $formView = $form->createView();
         // set the theme for the current Admin Form
-        $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
+        $this->setFormTheme($formView);
 
         return $this->render($this->admin->getTemplate($templateKey), array(
             'action' => 'edit',
-            'form' => $view,
+            'form' => $formView,
             'object' => $object,
         ), null);
     }
 
     /**
      * Batch action.
-     *
-     * @param Request $request
      *
      * @return Response|RedirectResponse
      *
@@ -417,14 +415,17 @@ class CRUDController extends Controller
             true;
 
         if ($askConfirmation && $confirmation != 'ok') {
-            $translationDomain = $batchActions[$action]['translation_domain'] ?: $this->admin->getTranslationDomain();
-            $actionLabel = $this->admin->trans($batchActions[$action]['label'], array(), $translationDomain);
+            $actionLabel = $batchActions[$action]['label'];
+            $batchTranslationDomain = isset($batchActions[$action]['translation_domain']) ?
+                $batchActions[$action]['translation_domain'] :
+                $this->admin->getTranslationDomain();
 
             $formView = $datagrid->getForm()->createView();
 
             return $this->render($this->admin->getTemplate('batch_confirmation'), array(
                 'action' => 'list',
                 'action_label' => $actionLabel,
+                'batch_translation_domain' => $batchTranslationDomain,
                 'datagrid' => $datagrid,
                 'form' => $formView,
                 'data' => $data,
@@ -456,8 +457,6 @@ class CRUDController extends Controller
 
     /**
      * Create action.
-     *
-     * @param Request $request
      *
      * @return Response
      *
@@ -523,7 +522,7 @@ class CRUDController extends Controller
 
                     $this->addFlash(
                         'sonata_flash_success',
-                        $this->admin->trans(
+                        $this->trans(
                             'flash_create_success',
                             array('%name%' => $this->escapeHtml($this->admin->toString($object))),
                             'SonataAdminBundle'
@@ -544,7 +543,7 @@ class CRUDController extends Controller
                 if (!$this->isXmlHttpRequest()) {
                     $this->addFlash(
                         'sonata_flash_error',
-                        $this->admin->trans(
+                        $this->trans(
                             'flash_create_error',
                             array('%name%' => $this->escapeHtml($this->admin->toString($object))),
                             'SonataAdminBundle'
@@ -558,14 +557,13 @@ class CRUDController extends Controller
             }
         }
 
-        $view = $form->createView();
-
+        $formView = $form->createView();
         // set the theme for the current Admin Form
-        $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
+        $this->setFormTheme($formView);
 
         return $this->render($this->admin->getTemplate($templateKey), array(
             'action' => 'create',
-            'form' => $view,
+            'form' => $formView,
             'object' => $object,
         ), null);
     }
@@ -574,7 +572,6 @@ class CRUDController extends Controller
      * Show action.
      *
      * @param int|string|null $id
-     * @param Request         $request
      *
      * @return Response
      *
@@ -612,7 +609,6 @@ class CRUDController extends Controller
      * Show history revisions for object.
      *
      * @param int|string|null $id
-     * @param Request         $request
      *
      * @return Response
      *
@@ -660,7 +656,6 @@ class CRUDController extends Controller
      *
      * @param int|string|null $id
      * @param string|null     $revision
-     * @param Request         $request
      *
      * @return Response
      *
@@ -722,7 +717,6 @@ class CRUDController extends Controller
      * @param int|string|null $id
      * @param int|string|null $base_revision
      * @param int|string|null $compare_revision
-     * @param Request         $request
      *
      * @return Response
      *
@@ -839,11 +833,10 @@ class CRUDController extends Controller
      * Returns the Response object associated to the acl action.
      *
      * @param int|string|null $id
-     * @param Request         $request
      *
      * @return Response|RedirectResponse
      *
-     * @throws AccessDeniedException If access is not granted.
+     * @throws AccessDeniedException If access is not granted
      * @throws NotFoundHttpException If the object does not exist or the ACL is not enabled
      */
     public function aclAction($id = null)
@@ -1107,8 +1100,6 @@ class CRUDController extends Controller
     /**
      * Returns true if the preview is requested to be shown.
      *
-     * @param Request $request
-     *
      * @return bool
      */
     protected function isPreviewRequested()
@@ -1120,8 +1111,6 @@ class CRUDController extends Controller
 
     /**
      * Returns true if the preview has been approved.
-     *
-     * @param Request $request
      *
      * @return bool
      */
@@ -1138,8 +1127,6 @@ class CRUDController extends Controller
      * That means either a preview is requested or the preview has already been shown
      * and it got approved/declined.
      *
-     * @param Request $request
-     *
      * @return bool
      */
     protected function isInPreviewMode()
@@ -1152,8 +1139,6 @@ class CRUDController extends Controller
 
     /**
      * Returns true if the preview has been declined.
-     *
-     * @param Request $request
      *
      * @return bool
      */
@@ -1360,5 +1345,44 @@ class CRUDController extends Controller
      */
     protected function preList(Request $request)
     {
+    }
+
+    /**
+     * Translate a message id.
+     *
+     * @param string $id
+     * @param array  $parameters
+     * @param string $domain
+     * @param string $locale
+     *
+     * @return string translated string
+     */
+    final protected function trans($id, array $parameters = array(), $domain = null, $locale = null)
+    {
+        $domain = $domain ?: $this->admin->getTranslationDomain();
+
+        return $this->get('translator')->trans($id, $parameters, $domain, $locale);
+    }
+
+    /**
+     * Sets the admin form theme to form view. Used for compatibility between Symfony versions.
+     *
+     * @param FormView $formView
+     */
+    private function setFormTheme(FormView $formView)
+    {
+        $twig = $this->get('twig');
+
+        try {
+            $twig
+                ->getRuntime('Symfony\Bridge\Twig\Form\TwigRenderer')
+                ->setTheme($formView, $this->admin->getFilterTheme());
+        } catch (\Twig_Error_Runtime $e) {
+            // BC for Symfony < 3.2 where this runtime not exists
+            $twig
+                ->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')
+                ->renderer
+                ->setTheme($formView, $this->admin->getFilterTheme());
+        }
     }
 }

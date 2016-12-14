@@ -31,6 +31,7 @@ var Admin = {
         Admin.setup_tree_view(subject);
         Admin.setup_collection_counter(subject);
         Admin.setup_sticky_elements(subject);
+        Admin.setup_readmore_elements(subject);
 
 //        Admin.setup_list_modal(subject);
     },
@@ -140,6 +141,8 @@ var Admin = {
     },
 
     /**
+     * NEXT_MAJOR: remove this function.
+     *
      * @deprecated in version 3.0
      */
     add_pretty_errors: function() {
@@ -592,6 +595,17 @@ var Admin = {
                 func.apply(context, args);
             }
         };
+    },
+    setup_readmore_elements: function(subject) {
+        Admin.log('[core|setup_readmore_elements] setup readmore elements on', subject);
+
+        jQuery(subject).find('.sonata-readmore').each(function(i, ui){
+            jQuery(this).readmore({
+                collapsedHeight: parseInt(jQuery(this).data('readmore-height')),
+                moreLink: '<a href="#">'+jQuery(this).data('readmore-more')+'</a>',
+                lessLink: '<a href="#">'+jQuery(this).data('readmore-less')+'</a>'
+            });
+        });
     }
 };
 

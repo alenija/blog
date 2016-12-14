@@ -95,9 +95,9 @@ FrameworkBundle
 HttpKernel
 ----------
 
- * Passing objects as URI attributes to the ESI and SSI renderers has been
+ * Passing non-scalar values as URI attributes to the ESI and SSI renderers has been
    deprecated and will be removed in Symfony 4.0. The inline fragment
-   renderer should be used with object attributes.
+   renderer should be used with non-scalar attributes.
 
  * The `ControllerResolver::getArguments()` method has been deprecated and will
    be removed in 4.0. If you have your own `ControllerResolverInterface`
@@ -110,6 +110,10 @@ Serializer
  * Passing a Doctrine `Cache` instance to the `ClassMetadataFactory` has been
    deprecated and will not be supported in Symfony 4.0. You should use the
    `CacheClassMetadataFactory` class instead.
+
+ * The `AbstractObjectNormalizer::isAttributeToNormalize()` method has been removed
+   because it was initially added by mistake, has never been used and is not tested
+   nor documented.
 
 Translation
 -----------
