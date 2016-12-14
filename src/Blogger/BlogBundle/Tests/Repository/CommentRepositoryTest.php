@@ -19,12 +19,13 @@ class CommentRepositoryTest extends WebTestCase
         $kernel->boot();
         $this->commentRepository = $kernel->getContainer()
             ->get('doctrine.orm.entity_manager')
-            ->getRepository('BlogBundle:Comment');
+            ->getRepository('BlogBundle:Comment')
+        ;
     }
 
     public function testGetCommentsForBlog(){
         $commentsForBlog = $this->commentRepository->getCommentsForBlog('1');
-        $this->assertTrue(count($commentsForBlog) > 1);
+        $this->assertTrue(count($commentsForBlog) >= 1);
     }
 
     public function testGetLatestComments(){

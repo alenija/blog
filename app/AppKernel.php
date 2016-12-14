@@ -33,16 +33,9 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-
-            // The SonataAdminBundle
-            new Sonata\CoreBundle\SonataCoreBundle(),
-            new Sonata\BlockBundle\SonataBlockBundle(),
+            
             //бандл и библиотека для динамической генерации меню. В качестве путей использует роуты.
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-
-            // The storage and SonataAdminBundle
-            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
-            new Sonata\AdminBundle\SonataAdminBundle(),
+//            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
 

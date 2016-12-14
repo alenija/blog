@@ -11,10 +11,8 @@ class AdminController extends Controller
         $blogs = $this->getDoctrine()->getRepository('BlogBundle:Blog')
             ->getLatestBlogs();
         
-        $a = "test";
-        
         return $this->render('BlogBundle:Admin:index.html.twig', array(
             'blogs' => $blogs,
-            'aaa' =>$a));
+            ));
     }
 }

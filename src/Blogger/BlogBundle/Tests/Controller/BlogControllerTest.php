@@ -11,16 +11,23 @@ class BlogControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/1/a-day-with-symfony');
+//        $crawler = $client->request('GET', '/1/a-day-with-symfony');
+//        $this->assertEquals(1, $crawler->filter('h2:contains("A day with Symfony2")')->count());
+        $commentName = 'testName';
+        $commentText = 'testComment';
 
-        $this->assertEquals(1, $crawler->filter('h2:contains("A day with Symfony2")')->count());
+        $crawler = $client->request('GET', '/');
+        $blogLink = $crawler->filter('article.blog h2 a')->last(); // тег - article с классом - blog, last - последний на странице
+        $blogTitle = $blogLink->text();
+        $crawler = $client->click($blogLink->link()); // ответ страницы блога
+        $this->assertEquals(1, $crawler->filter('h2:contains("'. $blogTitle .'")')->count());
 
         // Select based on button value, or id or name for buttons
         $form = $crawler->selectButton('Submit')->form();
 
         $crawler = $client->submit($form, array(
-            'blogger_blogbundle_commenttype[user]'          => 'testName',
-            'blogger_blogbundle_commenttype[comment]'       => 'testComment',
+            'blogger_blogbundle_commenttype[user]'          => $commentName,
+            'blogger_blogbundle_commenttype[comment]'       => $commentText,
         ));
 
         // Need to follow redirect
@@ -28,20 +35,20 @@ class BlogControllerTest extends WebTestCase
 
         // Check comment is now displaying on page, as the last entry. This ensure comments
         // are posted in order of oldest to newest
-        $articleCrawler = $crawler->filter('section .previous-comments article')->last();
+        $articleCrawler = $crawler->filter('section .previous-comments article')->last(); //последний коментарий на странице
 
-        $this->assertEquals('testName', $articleCrawler->filter('header span.highlight')->text());
-        $this->assertEquals('testComment', $articleCrawler->filter('p')->last()->text());
+        $this->assertEquals($commentName, $articleCrawler->filter('header span.highlight')->text()); // соответствует ли заголовок комментария с заданным ранее
+        $this->assertEquals($commentText, $articleCrawler->filter('p')->last()->text());  // соответствует ли тескт комментария
 
         // Check the sidebar to ensure latest comments are display and there is 10 of them
 
         $this->assertEquals(10, $crawler->filter('aside.sidebar section')->last()
             ->filter('article')->count()
-        );
+        ); // проверка отображается ли 10 комментариев в сайтбаре
 
-        $this->assertEquals('testName', $crawler->filter('aside.sidebar section')->last()
-            ->filter('article')->first()
-            ->filter('header span.highlight')->text()
+        $this->assertEquals($commentName, $crawler->filter('aside.sidebar section')->last()
+            ->filter('article')->first() // первый комент в сайтбаре
+            ->filter('header span.highlight')->text() // заголовок этого коммента 
         );
     }
 }
