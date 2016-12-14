@@ -26,17 +26,17 @@ class PageControllerTest extends WebTestCase
         $this->assertTrue($crawler->filter('article.blog')->count() > 0);
 
         // Find the first link, get the title, ensure this is loaded on the next page
-        $blogLink = $crawler->filter('article.blog h2 a')->first();
+        $blogLink = $crawler->filter('article.blog h2 a')->first(); // тег - article с классом - blog
         $blogTitle = $blogLink->text();
-        $crawler = $client->click($blogLink->link());
+        $crawler = $client->click($blogLink->link()); // ответ страницы блога
 
         // Check the h2 has the blog title in it
-        $this->assertEquals(1, $crawler->filter('h2:contains("'. $blogTitle .'")')->count());
+        $this->assertEquals(1, $crawler->filter('h2:contains("'. $blogTitle .'")')->count()); // поиск на странице блога заголовка $blogTitleкоторый так же соответствует ссылке
     }
 
     public function testContact()
     {
-        $client = static::createClient();
+         $client = static::createClient();
 
         $crawler = $client->request('GET', '/contact');
 
@@ -45,15 +45,17 @@ class PageControllerTest extends WebTestCase
         // Select based on button value, or id or name for buttons
         $form = $crawler->selectButton('Submit')->form();
 
-        $form['contact[name]'] = 'name';
-        $form['contact[email]'] = 'email@email.com';
-        $form['contact[subject]'] = 'Subject';
-        $form['contact[body]'] = 'The comment body must be at least 50 characters long as there is a validation constrain on the Enquiry entity';
+        $form['enquiry[name]'] = 'name';
+        $form['enquiry[email]'] = 'email@email.com';
+        $form['enquiry[subject]'] = 'Subject';
+        $form['enquiry[body]'] = 'The comment body must be at least 50 characters long as there is a validation constrain on the Enquiry entity';
 
-        $crawler = $client->submit($form);
+        $crawler = $client->submit($form); // Форма передается на клиентский submit() метод чтобы отправить форму. Назад получаем экземпляр Crawler
+//        $crawler = $client->followRedirect(); // Нужно сделать редирект, что бы появилось флеш сообщение, изначально его нет
+//        $this->assertEquals(1, $crawler->filter('.blogger-notice:contains("Your contact enquiry was successfully sent. Thank you!")')->count()); //Используя ответ Crawler проверяем, что в возвращенном ответе есть flash сообщение
 
         // Check email has been sent
-        if ($profile = $client->getProfile()) {
+        if ($profile = $client->getProfile()) { // тесты не должны выполняться в тестовой среде, они должны быть запущены в рабочем окружении, где вещи, такие как профайлер не будут доступны
             $swiftMailerProfiler = $profile->getCollector('swiftmailer');
 
             // Only 1 message should have been sent

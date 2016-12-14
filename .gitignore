@@ -6,5 +6,8 @@ web/images/
 /web/bundles/
 .idea/
 var/sessions/
-vendor
+vendor/
 .htaccess
+app/phpunit.xml
+phpunit-report
+app/config/parameters.yml

@@ -17,5 +17,12 @@ parameters:
     mailer_user: alena.test.post
     mailer_password: userss123
 
+    google_client_id: 108168137646-ss8n8h2dhtl9mjas7hv2f5030al0cm62.apps.googleusercontent.com
+    google_client_secret: MUk3kGktGbzSysWJOMjwCL2Q
+    facebook_client_id: 298602563867262
+    facebook_client_secret: f2a7b276244af4ad6f45c19f6fb29547
+    github_client_id: 3e320e7c5722f31d33f2
+    github_client_secret: 2a732e6febd87f4f4e82c9cbcbe94a57c36a8a74
+
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt

@@ -19,15 +19,17 @@ class BlogRepositoryTest extends WebTestCase
         $kernel->boot();
         $this->blogRepository = $kernel->getContainer()
             ->get('doctrine.orm.entity_manager')
-            ->getRepository('BlogBundle:Blog');
+            ->getRepository('BlogBundle:Blog')
+        ;
     }
 
     public function testGetTags()
     {
+        $realTag = '1313';
         $tags = $this->blogRepository->getTags();
 
         $this->assertTrue(count($tags) > 1);
-        $this->assertContains('symblog', $tags);
+        $this->assertContains($realTag, $tags);
     }
 
     public function testGetTagWeights()
