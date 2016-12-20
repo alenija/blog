@@ -25,7 +25,7 @@ class CommentRepositoryTest extends WebTestCase
 
     public function testGetCommentsForBlog(){
         $commentsForBlog = $this->commentRepository->getCommentsForBlog('1');
-        $this->assertTrue(count($commentsForBlog) >= 1);
+        $this->assertTrue(count($commentsForBlog) > 0);
     }
 
     public function testGetLatestComments(){

@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
-use Blogger\BlogBundle\Admin\BlogAdmin;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
@@ -48,7 +47,10 @@ class Blog
 
     /**
      * @var string
-     * @Assert\File( maxSize = "3072k", mimeTypesMessage = "Please upload a valid Image")
+     * @Assert\File(
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/jpg"},
+     *     mimeTypesMessage = "Please upload a valid Image"
+     * )
      * @ORM\Column(type="string", length=30)
      */
     protected $image;
@@ -372,7 +374,6 @@ class Blog
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('author', new NotBlank(array('message' => 'please, input your name')));
-        $metadata->addPropertyConstraint('image', new Length(array('max' => 20)));
     }
 
 

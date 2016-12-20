@@ -31,6 +31,7 @@ security:
             security: false
 
         main:
+            http_basic: ~ # для тестов, для авторизации
 #            pattern: /.*
             pattern: ^/
             anonymous: ~

@@ -23,6 +23,12 @@ class BlogRepositoryTest extends WebTestCase
         ;
     }
 
+    public function testGetBlog()
+    {
+        $blogs = $this->blogRepository->getLatestBlogs();
+        $this->assertTrue(count($blogs) > 0);
+    }
+
     public function testGetTags()
     {
         $realTag = '1313';

@@ -57,24 +57,26 @@ class BlogController extends Controller
 
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
+        
+//        $c = $form->getErrors(true, false);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             // $file stores the uploaded image file
             /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
             $file = $blog->getImage();
-            // Generate a unique name for the file before saving it
-            //guessExtension() - Returns the extension based on the mime type.
-            $fileName = substr(md5(uniqid()),0 ,14).'.'.$file->guessExtension();
-
+//            // Generate a unique name for the file before saving it
+//            //guessExtension() - Returns the extension based on the mime type.
+            $fileName = substr(md5(uniqid()),0 ,14).'.'.$file->guessExtension(); // guessExtension() - Returns the extension based on the mime type.
+//            $fileName = substr(md5(uniqid()),0 ,14).'.'.$file->getClientOriginalExtension(); // guessClientExtension() - Returns the extension based on the client mime type.
+//
             // Move the file to the directory where brochures are stored
-            $file->move(  //
-                $this->container->getParameter('images_directory'),
+            $file->move(
+                $this->getParameter('images_directory'),
                 $fileName
             );
+//            $fileName = "123";
 
-            // Update the 'brochure' property to store the PDF file name
-            // instead of its contents
             $blog->setImage($fileName);
 
             $em = $this->getDoctrine()

@@ -34,7 +34,7 @@
     </div>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <div>
+        <div class="new-article">
             <p>New article for blog: <a href="{{ path('BloggerBlogBundle_blog_create') }}"> MyBlog </a></p>
         </div>
     {% endif %}
