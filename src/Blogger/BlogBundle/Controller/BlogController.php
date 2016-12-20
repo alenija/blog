@@ -67,15 +67,13 @@ class BlogController extends Controller
             $file = $blog->getImage();
 //            // Generate a unique name for the file before saving it
 //            //guessExtension() - Returns the extension based on the mime type.
-            $fileName = substr(md5(uniqid()),0 ,14).'.'.$file->guessExtension(); // guessExtension() - Returns the extension based on the mime type.
-//            $fileName = substr(md5(uniqid()),0 ,14).'.'.$file->getClientOriginalExtension(); // guessClientExtension() - Returns the extension based on the client mime type.
-//
+            $fileName = substr(md5(uniqid()),0 ,14).'.'.$file->guessExtension();
+            
             // Move the file to the directory where brochures are stored
             $file->move(
                 $this->getParameter('images_directory'),
                 $fileName
             );
-//            $fileName = "123";
 
             $blog->setImage($fileName);
 
