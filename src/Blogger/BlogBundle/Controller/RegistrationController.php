@@ -20,7 +20,7 @@ class RegistrationController extends BaseController
         return 'fos_user_registration';
     }
 
-    public function registrationAction(Request $request)
+    public function registerAction(Request $request)
     {
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
         $formFactory = $this->get('fos_user.registration.form.factory');
