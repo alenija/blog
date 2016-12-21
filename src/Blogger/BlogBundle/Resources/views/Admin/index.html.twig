@@ -39,7 +39,7 @@
             <th></th>
             <th></th>
         </tr>
-        {% for blog in pagination.items %} {# blogs %} #}
+        {% for blog in pagination.items %}
             <tr>
                 <td class="id">{{ blog.id  }}</td>
                 <td><img src="{{ asset(['images/',blog.image]|join) }}" /></td>

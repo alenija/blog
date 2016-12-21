@@ -19,7 +19,6 @@ class AdminController extends Controller
             10);
         
         return $this->render('BlogBundle:Admin:index.html.twig', [
-            'blogs' => $blogs,
             'pagination' => $pagination,
             ]);
     }
