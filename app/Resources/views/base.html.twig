@@ -1,3 +1,4 @@
+<!-- app/Resources/views/base.html.twig -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +11,12 @@
     {% block stylesheets %}
         <link href='http://fonts.googleapis.com/css?family=Irish+Grover' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>
-        {% stylesheets 'css/*' %}
-            <link href="{{ asset_url }}" rel="stylesheet" media="screen" />
-        {% endstylesheets %}
+        {#{% stylesheets 'css/*' %}#}
+            {#<link href="{{ asset_url }}" rel="stylesheet" media="screen" />#}
+        {#{% endstylesheets %}#}
+        <link href="{{ asset('css/screen.css') }}" type="text/css" rel="stylesheet" />
+        {#<link href="{{ asset('bundles/blog/css/sidebar.css') }}" type="text/css" rel="stylesheet" />#}
+        {#<link href="{{ asset('bundles/blog/css/sidebar.css') }}" type="text/css" rel="stylesheet" />#}
     {% endblock %}
 
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />

@@ -3,31 +3,31 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets
-    '@BlogBundle/Resources/public/css/admin.css'
-    %}
-        <link href="{{ asset_url }}" rel="stylesheet" media="admin" />
-    {% endstylesheets %}
+    {#{% stylesheets#}
+    {#'@BlogBundle/Resources/public/css/admin.css'#}
+    {#%}#}
+        {#<link href="{{ asset_url }}" rel="stylesheet" media="admin" />#}
+    {#{% endstylesheets %}#}
+    <link href="{{ asset('bundles/blog/css/admin.css') }}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block title %}Admin{% endblock%}
 
 {% block body %}
-    <h2>
-        Welcome to the administrator's page, {{ app.user.username }}!
-    </h2>
+    <div class="admin-title">
+        <h2>
+            Welcome to the administrator's page, {{ app.user.username }}!
+        </h2>
 
-    <p>
-        {% for flash_message in app.session.flashBag.get('notice') %}
-                <div class="flash-notice">
-                    {{ flash_message }}
-                </div>
-        {% endfor %}
-    </p>
-
-    <h3>
+        <p>
+            {% for flash_message in app.session.flashBag.get('notice') %}
+                    <div class="flash-notice">
+                        {{ flash_message }}
+                    </div>
+            {% endfor %}
+        </p>
         The articles:
-    </h3>
+    </div>
     <table class="articles">
         <tr>
             <th>id</th>
@@ -39,9 +39,9 @@
             <th></th>
             <th></th>
         </tr>
-        {% for blog in blogs %}
+        {% for blog in pagination.items %} {# blogs %} #}
             <tr>
-                <td>{{ blog.id  }}</td>
+                <td class="id">{{ blog.id  }}</td>
                 <td><img src="{{ asset(['images/',blog.image]|join) }}" /></td>
                 <td>{{ blog.title  }}</td>
                 <td>{{ blog.author  }}</td>
@@ -54,6 +54,10 @@
             <p>There are no blog entries for myblog</p>
         {% endfor %}
     </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 
 {% endblock %}
 

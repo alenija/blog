@@ -5,13 +5,13 @@
     {{ parent() }}
 
 {#Merge all css files    #}
-    {% stylesheets
-    '@BlogBundle/Resources/public/css/*'
-    %}
-        <link href="{{ asset_url }}" rel="stylesheet" media="screen" />
-        {#<link href="{{ asset('bundles/blog/css/blog.css') }}" type="text/css" rel="stylesheet" />#}
-        {#<link href="{{ asset('bundles/blog/css/sidebar.css') }}" type="text/css" rel="stylesheet" />#}
-    {% endstylesheets %}
+    {#{% stylesheets#}
+    {#'@BlogBundle/Resources/public/css/*'#}
+    {#%}#}
+        {#<link href="{{ asset_url }}" rel="stylesheet" media="screen" />#}
+        <link href="{{ asset('bundles/blog/css/blog.css') }}" type="text/css" rel="stylesheet" />
+        <link href="{{ asset('bundles/blog/css/sidebar.css') }}" type="text/css" rel="stylesheet" />
+    {#{% endstylesheets %}#}
 {% endblock %}
 
 {% block sidebar %}

@@ -1,15 +1,15 @@
 {# src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig #}
 
-<section class="section">
+<section class="section" xmlns="http://www.w3.org/1999/html">
     <header>
         <h3>Tag Cloud</h3>
     </header>
     <p class="tags">
         {% for tag, weight in tags %}
-        <span class="weight-{{ weight }}">{{ tag }}</span>
+            <span class="weight-{{ weight }}">{{ tag }}</span>
         {% else %}
-    <p>There are no tags</p>
-    {% endfor %}
+            <p>There are no tags</p>
+        {% endfor %}
     </p>
 </section>
 

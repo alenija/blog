@@ -3,7 +3,8 @@
 assetic:
     bundles:    [BlogBundle]
     debug:          '%kernel.debug%'
-    use_controller: '%kernel.debug%'
+    use_controller: false #'%kernel.debug%' #false - tell Symfony to stop trying to process assetic`s files dynamically
+#    use_controller: '%kernel.debug%'
     filters:
         cssrewrite: ~
 
