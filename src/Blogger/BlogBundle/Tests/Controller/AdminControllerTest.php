@@ -9,7 +9,6 @@
 namespace Blogger\BlogBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Blogger\BlogBundle\Entity\User;
 
 class AdminControllerTest extends WebTestCase
 {
