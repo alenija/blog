@@ -19,10 +19,10 @@ class CommentController extends Controller
 
         $form = $this->createForm(CommentType::class, $comment);
 
-        return $this->render('BlogBundle:Comment:form.html.twig', array(
+        return $this->render('BlogBundle:Comment:form.html.twig', [
             'comment' => $comment,
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     public function createAction(Request $request, $blog_id) //data processing in the form of a comment
@@ -38,17 +38,18 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
+            return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', [
                     'id' => $comment->getBlog()->getId(),
-                    'slug' => $comment->getBlog()->getSlug())) .
-                '#comment-' . $comment->getId()
+                    'slug' => $comment->getBlog()->getSlug()
+                    ]
+        ) . '#comment-' . $comment->getId()
             );
         }
 
-        return $this->render('BlogBundle:Comment:create.html.twig', array(
+        return $this->render('BlogBundle:Comment:create.html.twig', [
             'comment' => $comment,
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     public function changeAction($comment_id, Request $request) //data processing in the form of a comment
@@ -83,17 +84,17 @@ class CommentController extends Controller
 
             $em->flush();
             
-            return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
+            return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', [
                 'id' => $comment->getBlog()->getId(),
                 'slug' => $comment->getBlog()->getSlug(),
-            )));
+            ]));
         }
 
-        return $this->render('BlogBundle:Comment:edit.html.twig', array(
+        return $this->render('BlogBundle:Comment:edit.html.twig', [
             'form' => $form->createView(),
             'comment' => $comment,
             'Title' => $title,
-        ));
+        ]);
     }
 
     protected function processInitializationComment($blog_id)

@@ -23,10 +23,10 @@ class PageController extends Controller
             3);
 
         // parameters to template
-        return $this->render('BlogBundle:Page:index.html.twig', array(
+        return $this->render('BlogBundle:Page:index.html.twig', [
             'blogs' => $blogs,
             'pagination' => $pagination,
-        ));
+        ]);
     }
 
     public function aboutAction()
@@ -49,7 +49,7 @@ class PageController extends Controller
                     ->setSubject('Contact enquiry from myblog')
                     ->setFrom('alenija@i.ua')
                     ->setTo($this->container->getParameter('blogger_blog.emails.contact_email'))
-                    ->setBody($this->renderView('BlogBundle:Page:contactEmail.txt.twig', array('enquiry' => $enquiry)));
+                    ->setBody($this->renderView('BlogBundle:Page:contactEmail.txt.twig', ['enquiry' => $enquiry]));
 
 
                 $this->get('mailer')->send($message);
@@ -62,9 +62,9 @@ class PageController extends Controller
             }
         }
 
-        return $this->render('BlogBundle:Page:contact.html.twig', array(
+        return $this->render('BlogBundle:Page:contact.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
 
     public function sidebarAction()
@@ -80,10 +80,10 @@ class PageController extends Controller
         $latestComments = $this->getDoctrine()->getRepository('BlogBundle:Comment')
             ->getLatestComments($commentLimit);
 
-        return $this->render('BlogBundle:Page:sidebar.html.twig', array(
+        return $this->render('BlogBundle:Page:sidebar.html.twig', [
             'tags' => $tagWeights,
             'latestComments'    => $latestComments,
-        ));
+        ]);
     }
 
 }

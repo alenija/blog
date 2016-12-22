@@ -40,12 +40,12 @@ class BlogController extends Controller
 
         $user = $this->getUser();
 
-        return $this->render('BlogBundle:Blog:show.html.twig', array( //если сущность найдена - передаем ее во вьюшку
+        return $this->render('BlogBundle:Blog:show.html.twig', [ //если сущность найдена - передаем ее во вьюшку
             'user'=>$user,
             'blog' => $blog, //во вьюшке twig-а будет массив blog с данными из $blog
             'comments' => $comments,
 //            'b' =>$countComment,
-        ));
+        ]);
     }
 
     public function createAction(Request $request)
@@ -86,9 +86,9 @@ class BlogController extends Controller
             return $this->redirect($this->generateUrl('BloggerBlogBundle_homepage'));
         }
 
-        return $this->render('BlogBundle:Blog:create.html.twig', array(
+        return $this->render('BlogBundle:Blog:create.html.twig', [
             'form' => $form->createView()
-        ));
+        ]);
     }
     
     public function deleteAction($id)
@@ -125,7 +125,7 @@ class BlogController extends Controller
             ->add('title')
             ->add('author')
             ->add('blog')
-            ->add('image', FileType::class, array('data_class' => null))
+            ->add('image', FileType::class, ['data_class' => null])
             ->add('tags')
             ->getForm()
         ;
@@ -165,10 +165,10 @@ class BlogController extends Controller
             return $this->redirect($this->generateUrl('admin_home'));
         }
 
-        return $this->render('BlogBundle:Blog:edit.html.twig', array(
+        return $this->render('BlogBundle:Blog:edit.html.twig', [
             'form' => $form->createView(),
             'Title' => $noticeTitle
-        ));
+        ]);
 
     }
 }
