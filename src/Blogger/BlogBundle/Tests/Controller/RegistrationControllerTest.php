@@ -13,14 +13,23 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RegistrationControllerTest extends WebTestCase
 {
+    /**
+     * @var $testData array
+     */
+    private $testData;
+
+    public function setUp()
+    {
+        $this->testData['userName'] = 'testName' . random_int(0,100);
+        $this->testData['userEmail'] = $this->testData['userName'] . 'testEmail@i.ua';
+        $this->testData['userPassword'] = 'password';
+        $this->testData['userEmailBroken'] ="@testEmail";
+    }
+
+
     public function testRegister()
     {
         $client = static::createClient();
-
-        $userName = 'testName' . random_int(0,25);
-        $userEmail = $userName . 'testEmail@i.ua';
-        $userEmailBroken ="@testEmail";
-        $userPassword = 'password';
 
         $crawler = $client->request('GET', '/');
         $registerLink = $crawler->filter('ul.navigation li a:contains("Registration")');
@@ -30,10 +39,10 @@ class RegistrationControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Register')->form();
         $crawler = $client->submit($form, [
-            'fos_user_registration_form[email]'                  => $userEmail,
-            'fos_user_registration_form[username]'               => $userName,
-            'fos_user_registration_form[plainPassword][first]'   => $userPassword,
-            'fos_user_registration_form[plainPassword][second]'  => $userPassword,
+            'fos_user_registration_form[email]'                  => $this->testData['userEmail'],
+            'fos_user_registration_form[username]'               => $this->testData['userName'],
+            'fos_user_registration_form[plainPassword][first]'   => $this->testData['userPassword'],
+            'fos_user_registration_form[plainPassword][second]'  => $this->testData['userPassword'],
         ]);
         $crawler = $client->followRedirect();
 
@@ -43,6 +52,24 @@ class RegistrationControllerTest extends WebTestCase
 //        });
 //        echo $crawler->html();
 
-        $this->assertEquals(1, $crawler->filter('section p.success-message:contains("Congrats ' . $userName . ', your account is now activated.")')->count());
+        $this->assertEquals(1, $crawler->filter('section p.success-message:contains("Congrats ' . $this->testData['userName'] . ', your account is now activated.")')->count());
+    }
+
+    public function testBadRegister()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/register/');
+        $form = $crawler->selectButton('Register')->form();
+        $crawler = $client->submit($form, [
+            'fos_user_registration_form[email]'                  => $this->testData['userEmailBroken'],
+            'fos_user_registration_form[username]'               => '',
+            'fos_user_registration_form[plainPassword][first]'   => '123',
+            'fos_user_registration_form[plainPassword][second]'  => '456',
+        ]);
+
+//        echo $crawler->html();
+
+        $this->assertTrue($crawler->filter('div#fos_user_registration_form div ul li')->count() > 0);
     }
 }
